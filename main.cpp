@@ -56,7 +56,5 @@ int main(void)
 
     AO_myObj->start(QueueSto);
 
-    esf::run();
-
-    return 0;
+    return esf::run();
 }

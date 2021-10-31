@@ -23,7 +23,7 @@ namespace Event_driven
        This function will add the created active objects into a */
         static void add(Active *const a) noexcept;
 
-        static void run() noexcept;
+        static int run() noexcept;
 
         static void Activate_(void) noexcept;
 

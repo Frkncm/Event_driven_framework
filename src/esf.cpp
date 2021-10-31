@@ -23,7 +23,7 @@ namespace Event_driven
         CRIT_EXIT_();
     }
 
-    void esf::run() noexcept
+    int esf::run() noexcept
     {
         // Interrupt needs to be disabled
         INTERRUPT_DISABLE();
@@ -39,6 +39,8 @@ namespace Event_driven
         {
             onIdle();
         }
+        
+        return 0;
     }
 
     void esf::Activate_(void) noexcept
