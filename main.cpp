@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ao_service.hpp"
+#include "aos.hpp"
 
 using namespace Event_driven;
 
@@ -11,14 +11,14 @@ public:
     myObj(); // default ctor
 
 
-    STATE_DEC(Initial);
+    STATE_DEC(Initial_state);
     STATE_DEC(test);
     STATE_DEC(test1);
 };
 
-myObj::myObj() : Active(Initial) {}
+myObj::myObj() : Active(Initial_state) {}
 
-STATE_DEF(myObj, Initial)
+STATE_DEF(myObj, Initial_state)
 {   
     std::cout << "I am doing something for the initial state!\n";
     auto state = tran(test);
@@ -50,16 +50,16 @@ int main(void)
 
     std::cout << &AO_myObj << std::endl;
 
-    AO_myObj->start(5U, QueueSto);
+    AO_myObj->start(QueueSto);
 
-    Event myevt;
+    // Event myevt;
 
-    AO_myObj->dispatcher(&myevt);
-    AO_myObj->dispatcher(&myevt);
-    AO_myObj->dispatcher(&myevt);
-    AO_myObj->dispatcher(&myevt);
+    // l_myObj.dispatcher(nullptr);
+    //AO_myObj->dispatcher(&myevt);
+    //AO_myObj->dispatcher(&myevt);
+    //AO_myObj->dispatcher(&myevt);
 
-    sf::run();
+    esf::run();
 
     std::cout << "working!\n";
     return 0;

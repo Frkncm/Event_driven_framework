@@ -14,7 +14,9 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_executable(Event_driven_framework 
   main.cpp
-  src/ao_service.cpp
+  src/hsm.cpp
+  src/aos.cpp
+  src/esf.cpp
 )
 
 set_target_properties(Event_driven_framework PROPERTIES LINK_LIBRARIES -pthread)
