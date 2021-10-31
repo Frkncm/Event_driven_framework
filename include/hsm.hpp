@@ -23,8 +23,8 @@ namespace Event_driven
     struct Event
     {
         Signal sig;                    // signal of the event instance
-        std::uint8_t poolId_;          // pool ID (0 for static event)
-        std::uint8_t volatile refCtr_; // reference counter
+        //std::uint8_t poolId_;          // pool ID (0 for static event)
+        //std::uint8_t volatile refCtr_; // reference counter
     };
 
     using stateHandlerPtr = State (*)(void *const me, Event const *const e);
@@ -33,16 +33,16 @@ namespace Event_driven
     {
 
         stateHandlerPtr current_state;
-        stateHandlerPtr temp_state;
+        stateHandlerPtr target_state;
 
     public:
         HSM() {}
 
         HSM(stateHandlerPtr initial_state)
         {
-            temp_state = initial_state;
+            current_state = initial_state;
             //Initialize the initial state
-            tran(temp_state);
+            tran(current_state);
         }
 
         void dispatcher(Event const *const e);
@@ -50,13 +50,13 @@ namespace Event_driven
     protected:
         State tran(stateHandlerPtr const target) noexcept
         {
-            temp_state = target;
+            target_state = target;
             return HANDLE_TRAN;
         }
 
         State super(stateHandlerPtr const superstate) noexcept
         {
-            temp_state = superstate;
+            target_state = superstate;
             return SUPER_STATE;
         }
 

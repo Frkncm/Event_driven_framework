@@ -24,6 +24,8 @@ namespace Event_driven
 
         void start(Event const **const qSto);
 
+        bool post_(Event const *const e) noexcept;
+
     private:
         friend class sf;
     };

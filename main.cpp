@@ -10,17 +10,17 @@ class myObj : public Active
 public:
     myObj(); // default ctor
 
-
     STATE_DEC(Initial_state);
     STATE_DEC(test);
     STATE_DEC(test1);
+    STATE_DEC(test2);
 };
 
 myObj::myObj() : Active(Initial_state) {}
 
 STATE_DEF(myObj, Initial_state)
-{   
-    std::cout << "I am doing something for the initial state!\n";
+{
+    std::cout << "ınitial state!\n";
     auto state = tran(test);
     return state;
 }
@@ -29,13 +29,19 @@ STATE_DEF(myObj, test)
 {
     std::cout << "test is invoked!\n";
     auto state = tran(test1);
-    return STATE_HANDLED;
+    return state;
 }
 
 STATE_DEF(myObj, test1)
 {
     std::cout << "test1 is invoked!\n";
-    auto state = tran(test);
+    auto state = tran(test2);
+    return state;
+}
+
+STATE_DEF(myObj, test2)
+{
+    std::cout << "test2 is invoked!\n";
     return STATE_HANDLED;
 }
 
@@ -48,19 +54,9 @@ int main(void)
 
     static Event const *QueueSto[30];
 
-    std::cout << &AO_myObj << std::endl;
-
     AO_myObj->start(QueueSto);
-
-    // Event myevt;
-
-    // l_myObj.dispatcher(nullptr);
-    //AO_myObj->dispatcher(&myevt);
-    //AO_myObj->dispatcher(&myevt);
-    //AO_myObj->dispatcher(&myevt);
 
     esf::run();
 
-    std::cout << "working!\n";
     return 0;
 }

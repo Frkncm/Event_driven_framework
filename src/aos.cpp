@@ -11,4 +11,17 @@ namespace Event_driven
         esf::add(this);
     }
 
+    bool Active::post_(Event const *const e) noexcept
+    {
+        bool status;
+
+        CRIT_ENTRY_();
+
+        dispatcher(e);
+
+        CRIT_EXIT_();
+
+        return true;
+    }
+
 }
