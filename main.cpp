@@ -20,7 +20,7 @@ myObj::myObj() : Active(Initial_state) {}
 
 STATE_DEF(myObj, Initial_state)
 {
-    std::cout << "ınitial state!\n";
+    std::cout << "Initial state!\n";
     auto state = tran(test);
     return state;
 }

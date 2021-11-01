@@ -22,7 +22,7 @@ namespace Event_driven
 
     struct Event
     {
-        Signal sig;                    // signal of the event instance
+        Signal sig; // signal of the event instance
         //std::uint8_t poolId_;          // pool ID (0 for static event)
         //std::uint8_t volatile refCtr_; // reference counter
     };
@@ -40,9 +40,8 @@ namespace Event_driven
 
         HSM(stateHandlerPtr initial_state)
         {
+            //Register the initial state
             current_state = initial_state;
-            //Initialize the initial state
-            tran(current_state);
         }
 
         void dispatcher(Event const *const e);
