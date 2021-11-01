@@ -4,15 +4,15 @@
 #include <cstdint>
 
 #define STATE_DEC(stateName)                   \
-    State stateName##_h(Event const *const e); \
-    static State stateName(void *const me, Event const *const e)
+    Event_driven::State stateName##_h(Event_driven::Event const *const e); \
+    static Event_driven::State stateName(void *const me, Event_driven::Event const *const e)
 
 #define STATE_DEF(subclass, stateName)                              \
-    State subclass::stateName(void *const me, Event const *const e) \
+    Event_driven::State subclass::stateName(void *const me, Event_driven::Event const *const e) \
     {                                                               \
         return static_cast<subclass *>(me)->stateName##_h(e);       \
     }                                                               \
-    State subclass::stateName##_h(Event const *const e)
+    Event_driven::State subclass::stateName##_h(Event_driven::Event const *const e)
 
 namespace Event_driven
 {

@@ -10,13 +10,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/Edf_lib/include)
+include_directories(${PROJECT_SOURCE_DIR}/example_AO/inc)
 
 add_executable(Event_driven_framework 
   main.cpp
-  src/hsm.cpp
-  src/aos.cpp
-  src/esf.cpp
+  Edf_lib/src/hsm.cpp
+  Edf_lib/src/aos.cpp
+  Edf_lib/src/esf.cpp
+  example_AO/src/AO_example.cpp
 )
 
 set_target_properties(Event_driven_framework PROPERTIES LINK_LIBRARIES -pthread)
