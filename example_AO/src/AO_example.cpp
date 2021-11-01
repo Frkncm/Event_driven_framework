@@ -29,21 +29,50 @@ STATE_DEF(myObj, Initial_state)
 
 STATE_DEF(myObj, test)
 {
-    std::cout << "test is invoked!\n";
-    auto state = tran(test1);
+    Event_driven::State state;
+    switch (e->sig)
+    {
+    case ENTRY_SIG:
+        std::cout << "test is invoked!\n";
+        state = tran(test1);
+        break;
+
+    default:
+        break;
+    }
+
     return state;
 }
 
 STATE_DEF(myObj, test1)
 {
-    std::cout << "test1 is invoked!\n";
-    auto state = tran(test2);
+    Event_driven::State state;
+    switch (e->sig)
+    {
+    case ENTRY_SIG:
+        std::cout << "test1 is invoked!\n";
+        state = tran(test2);
+        break;
+
+    default:
+        break;
+    }
     return state;
 }
 
 STATE_DEF(myObj, test2)
 {
-    std::cout << "test2 is invoked!\n";
-    return STATE_HANDLED;
-}
+    Event_driven::State state;
+    switch (e->sig)
+    {
+    case ENTRY_SIG:
+        std::cout << "test2 is invoked!\n";
+        state = STATE_HANDLED; //tran(test);
+        break;
 
+    default:
+        break;
+    }
+
+    return state; //STATE_HANDLED;
+}

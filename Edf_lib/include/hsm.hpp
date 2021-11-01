@@ -3,15 +3,15 @@
 
 #include <cstdint>
 
-#define STATE_DEC(stateName)                   \
+#define STATE_DEC(stateName)                                               \
     Event_driven::State stateName##_h(Event_driven::Event const *const e); \
     static Event_driven::State stateName(void *const me, Event_driven::Event const *const e)
 
-#define STATE_DEF(subclass, stateName)                              \
+#define STATE_DEF(subclass, stateName)                                                          \
     Event_driven::State subclass::stateName(void *const me, Event_driven::Event const *const e) \
-    {                                                               \
-        return static_cast<subclass *>(me)->stateName##_h(e);       \
-    }                                                               \
+    {                                                                                           \
+        return static_cast<subclass *>(me)->stateName##_h(e);                                   \
+    }                                                                                           \
     Event_driven::State subclass::stateName##_h(Event_driven::Event const *const e)
 
 namespace Event_driven
@@ -65,6 +65,15 @@ namespace Event_driven
         static constexpr State HANDLE_TRAN{1};
 
         static constexpr State SUPER_STATE{2};
+
+    protected:
+
+        enum ReservedHsmSignals : Signal
+        {
+            ENTRY_SIG = 1, // signal for entry actions
+            EXIT_SIG,      // signal for exit actions
+            INIT_SIG       // signal for nested initial transitions
+        };
     };
 
 }

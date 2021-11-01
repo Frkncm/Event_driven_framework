@@ -7,17 +7,15 @@ namespace Event_driven
     {
         stateHandlerPtr cState = current_state;
 
-        stateHandlerPtr s;
         State rtn; // returned status
 
-        rtn = (*cState)(this, e);
-
-        if (rtn == HANDLE_TRAN)
+        do
         {
+            const Event evt{.sig = ENTRY_SIG};
+            rtn = (*cState)(this, &evt);
+            cState = current_state = target_state;
             /* if transition has been taken */
-            current_state = target_state;
-            dispatcher(nullptr);
-        }
+        } while (rtn == HANDLE_TRAN);
     }
 
 }
