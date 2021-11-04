@@ -46,6 +46,8 @@ namespace Event_driven
 
         void dispatcher(Event const *const e);
 
+        static State top(void *const me, Event const *const e) noexcept;
+
     protected:
         State tran(stateHandlerPtr const target) noexcept
         {
@@ -66,14 +68,18 @@ namespace Event_driven
 
         static constexpr State SUPER_STATE{2};
 
-    protected:
+        static constexpr State IGNORED_EVENT{4};
 
+    protected:
         enum ReservedHsmSignals : Signal
         {
             ENTRY_SIG = 1, // signal for entry actions
             EXIT_SIG,      // signal for exit actions
             INIT_SIG       // signal for nested initial transitions
         };
+
+    private:
+        static constexpr std::int_fast8_t MAX_NEST_DEPTH_{6};
     };
 
 }

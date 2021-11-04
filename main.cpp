@@ -3,7 +3,6 @@
 
 int main(void)
 {
-
     static Event_driven::Event const *QueueSto[30];
 
     AO_myObj->start(QueueSto);
