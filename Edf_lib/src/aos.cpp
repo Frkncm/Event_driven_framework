@@ -9,7 +9,7 @@ namespace Event_driven
     {
         //std::cout << "AO has been started!\n";
         esf::add(this);
-        this->init(par);
+        this->init();
     }
 
     bool Active::post_(Event const *const e) noexcept
@@ -17,7 +17,7 @@ namespace Event_driven
         bool status;
 
         CRIT_ENTRY_();
-
+        
         dispatcher(e);
 
         CRIT_EXIT_();

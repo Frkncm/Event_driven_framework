@@ -28,7 +28,7 @@ namespace Event_driven
         // Interrupt needs to be disabled
         INTERRUPT_DISABLE();
         // initial events need to be run
-        initial_events();
+        // initial_events();
 
         //  Run Sartup implementation
         onStartup();
@@ -50,7 +50,7 @@ namespace Event_driven
 
         for (int cur_ind = 0; cur_ind < AO_index; cur_ind++)
         {
-            active_[cur_ind]->dispatcher(nullptr);
+            active_[cur_ind]->init();
         }
     }
 

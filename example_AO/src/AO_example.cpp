@@ -34,6 +34,10 @@ STATE_DEF(myObj, test)
     {
     case ENTRY_SIG:
         std::cout << "test is invoked!\n";
+        status = STATE_HANDLED;
+        break;
+
+    case INIT_SIG:
         status = tran(test1);
         break;
 
@@ -52,6 +56,10 @@ STATE_DEF(myObj, test1)
     {
     case ENTRY_SIG:
         std::cout << "test1 is invoked!\n";
+        status = STATE_HANDLED;
+        break;
+
+    case INIT_SIG:
         status = tran(test2);
         break;
 
@@ -69,11 +77,15 @@ STATE_DEF(myObj, test2)
     {
     case ENTRY_SIG:
         std::cout << "test2 is invoked!\n";
-        status = tran(test);
+        status = STATE_HANDLED;
+        break;
+
+    case INIT_SIG:
+        status = STATE_HANDLED;
         break;
 
     default:
-        status = super(&test);
+        status = super(&test1);
         break;
     }
 

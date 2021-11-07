@@ -46,7 +46,7 @@ namespace Event_driven
             target_state = initial_state;
         }
 
-        void init(void const *const e);
+        void init(void);
 
         void dispatcher(Event const *const e);
 
@@ -83,7 +83,7 @@ namespace Event_driven
         };
 
     private:
-        static constexpr std::int_fast8_t MAX_NEST_DEPTH_{6};
+        static constexpr std::int_fast8_t MAX_NEST_DEPTH{6};
     };
 
 }
