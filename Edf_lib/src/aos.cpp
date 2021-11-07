@@ -5,10 +5,11 @@
 namespace Event_driven
 {
 
-    void Active::start(Event const **const qSto)
+    void Active::start(Event const **const qSto, void const * const par)
     {
         //std::cout << "AO has been started!\n";
         esf::add(this);
+        this->init(par);
     }
 
     bool Active::post_(Event const *const e) noexcept

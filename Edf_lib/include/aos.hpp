@@ -18,11 +18,11 @@ namespace Event_driven
     {
 
     public:
-        Active() {}
+        Active() = delete;
 
         Active(stateHandlerPtr initial_state) : HSM(initial_state) {}
 
-        void start(Event const **const qSto);
+        void start(Event const **const qSto, void const * const par);
 
         bool post_(Event const *const e) noexcept;
 

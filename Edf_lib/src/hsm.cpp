@@ -19,35 +19,59 @@ namespace Event_driven
         return IGNORED_EVENT;
     }
 
+    void HSM::init(void const *const e)
+    {
+        // dispatcher(static_cast<Event const *>(e));
+    }
+
     void HSM::dispatcher(Event const *const e)
     {
-        stateHandlerPtr cState = current_state;
+
+        stateHandlerPtr t = current_state;
+
+        stateHandlerPtr cState;
 
         State rtn; // returned status
 
         do
         {
+            /* Target state is being updated when we are using 
+            tran() or super() functions */
+            cState = target_state;
             /* Execute the current event */
             rtn = (*cState)(this, e);
-
-            if (rtn == SUPER_STATE)
-                cState = target_state;
-            
-            /* Find the super state by sending empty event */
-            Event tempSignal {.sig = EMPTY_SIG};
-            rtn = TRIG_STATE(cState, &tempSignal);
 
         } while (rtn == SUPER_STATE);
 
         /* If the transition is wanted to be taken */
         if (rtn == HANDLE_TRAN)
         {
+            stateHandlerPtr path[MAX_NEST_DEPTH_];
+
+            path[0] = target_state; // save last assigned target state
+            path[1] = t;
+            path[2] = cState;
+
+            for (; t != cState; t = target_state)
+            {
+                //Trig the exit state before exiting
+                Event tempSignal{.sig = EXIT_SIG};
+                if (TRIG_STATE(t, &tempSignal) == STATE_HANDLED)
+                {
+                    /* Find the super state by sending empty event */
+                    // tempSignal{.sig = EMPTY_SIG};
+                    // rtn = TRIG_STATE(cState, &tempSignal);
+                }
+            }
+
             cState = target_state;
 
             const Event evt{.sig = ENTRY_SIG};
 
             rtn = (*cState)(this, &evt);
         }
+
+        //current_state = cState;
     }
 
 }

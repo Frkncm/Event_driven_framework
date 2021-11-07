@@ -36,13 +36,17 @@ namespace Event_driven
         stateHandlerPtr target_state;
 
     public:
-        HSM() {}
+        HSM() = delete;
 
         HSM(stateHandlerPtr initial_state)
         {
+            //Current state should be assigned to empty state
+            current_state = reinterpret_cast<stateHandlerPtr>(&top);
             //Register the initial state
-            current_state = initial_state;
+            target_state = initial_state;
         }
+
+        void init(void const *const e);
 
         void dispatcher(Event const *const e);
 

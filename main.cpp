@@ -5,7 +5,7 @@ int main(void)
 {
     static Event_driven::Event const *QueueSto[30];
 
-    AO_myObj->start(QueueSto);
+    AO_myObj->start(QueueSto, 0U);
 
     return Event_driven::esf::run();
 }
