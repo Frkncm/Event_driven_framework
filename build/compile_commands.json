@@ -1,0 +1,27 @@
+[
+{
+  "directory": "/home/furkan/Cpp_workout/own_event_driven_framework/build",
+  "command": "/usr/bin/c++   -I/home/furkan/Cpp_workout/own_event_driven_framework/build -I/home/furkan/Cpp_workout/own_event_driven_framework -I/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/include -I/home/furkan/Cpp_workout/own_event_driven_framework/example_AO/inc  -g   -std=gnu++17 -o CMakeFiles/Event_driven_framework.dir/main.cpp.o -c /home/furkan/Cpp_workout/own_event_driven_framework/main.cpp",
+  "file": "/home/furkan/Cpp_workout/own_event_driven_framework/main.cpp"
+},
+{
+  "directory": "/home/furkan/Cpp_workout/own_event_driven_framework/build",
+  "command": "/usr/bin/c++   -I/home/furkan/Cpp_workout/own_event_driven_framework/build -I/home/furkan/Cpp_workout/own_event_driven_framework -I/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/include -I/home/furkan/Cpp_workout/own_event_driven_framework/example_AO/inc  -g   -std=gnu++17 -o CMakeFiles/Event_driven_framework.dir/Edf_lib/src/hsm.cpp.o -c /home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/src/hsm.cpp",
+  "file": "/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/src/hsm.cpp"
+},
+{
+  "directory": "/home/furkan/Cpp_workout/own_event_driven_framework/build",
+  "command": "/usr/bin/c++   -I/home/furkan/Cpp_workout/own_event_driven_framework/build -I/home/furkan/Cpp_workout/own_event_driven_framework -I/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/include -I/home/furkan/Cpp_workout/own_event_driven_framework/example_AO/inc  -g   -std=gnu++17 -o CMakeFiles/Event_driven_framework.dir/Edf_lib/src/aos.cpp.o -c /home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/src/aos.cpp",
+  "file": "/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/src/aos.cpp"
+},
+{
+  "directory": "/home/furkan/Cpp_workout/own_event_driven_framework/build",
+  "command": "/usr/bin/c++   -I/home/furkan/Cpp_workout/own_event_driven_framework/build -I/home/furkan/Cpp_workout/own_event_driven_framework -I/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/include -I/home/furkan/Cpp_workout/own_event_driven_framework/example_AO/inc  -g   -std=gnu++17 -o CMakeFiles/Event_driven_framework.dir/Edf_lib/src/esf.cpp.o -c /home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/src/esf.cpp",
+  "file": "/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/src/esf.cpp"
+},
+{
+  "directory": "/home/furkan/Cpp_workout/own_event_driven_framework/build",
+  "command": "/usr/bin/c++   -I/home/furkan/Cpp_workout/own_event_driven_framework/build -I/home/furkan/Cpp_workout/own_event_driven_framework -I/home/furkan/Cpp_workout/own_event_driven_framework/Edf_lib/include -I/home/furkan/Cpp_workout/own_event_driven_framework/example_AO/inc  -g   -std=gnu++17 -o CMakeFiles/Event_driven_framework.dir/example_AO/src/AO_example.cpp.o -c /home/furkan/Cpp_workout/own_event_driven_framework/example_AO/src/AO_example.cpp",
+  "file": "/home/furkan/Cpp_workout/own_event_driven_framework/example_AO/src/AO_example.cpp"
+}
+]

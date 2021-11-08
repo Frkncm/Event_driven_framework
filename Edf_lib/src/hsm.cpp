@@ -1,4 +1,5 @@
 #include "hsm.hpp"
+#include <assert.h>
 //! helper macro to trigger internal event in an HSM
 #define TRIG_STATE(state_, sig_) \
     ((*(state_))(this, sig_))
@@ -29,6 +30,8 @@ namespace Event_driven
 
         // Execute the initial function at first with empty event
         State rtn = (*target_state)(this, static_cast<Event const *>(0U));
+
+        assert(rtn == HANDLE_TRAN);
 
         do
         {
@@ -89,17 +92,19 @@ namespace Event_driven
 
         stateHandlerPtr t = current_state;
 
-        stateHandlerPtr cState;
+        stateHandlerPtr super_state;
 
         State rtn; // returned status
+
+        Event tempSignal;
 
         do
         {
             /* Target state is being updated when we are using 
             tran() or super() functions */
-            cState = target_state;
+            super_state = target_state;
             /* Execute the current event */
-            rtn = (*cState)(this, e);
+            rtn = (*super_state)(this, e);
 
         } while (rtn == SUPER_STATE);
 
@@ -110,25 +115,25 @@ namespace Event_driven
 
             path[0] = target_state; // save last assigned target state
             path[1] = t;
-            path[2] = cState;
+            path[2] = super_state;
 
-            for (; t != cState; t = target_state)
+            for (; t != super_state; t = target_state)
             {
                 //Trig the exit state before exiting
-                Event tempSignal{.sig = EXIT_SIG};
+                tempSignal.sig = EXIT_SIG;
                 if (TRIG_STATE(t, &tempSignal) == STATE_HANDLED)
                 {
                     /* Find the super state by sending empty event */
                     // tempSignal{.sig = EMPTY_SIG};
-                    // rtn = TRIG_STATE(cState, &tempSignal);
+                    // rtn = TRIG_STATE(super_state, &tempSignal);
                 }
             }
 
-            cState = target_state;
+            super_state = target_state;
 
             const Event evt{.sig = ENTRY_SIG};
 
-            rtn = (*cState)(this, &evt);
+            rtn = (*super_state)(this, &evt);
         }
 
         //current_state = cState;

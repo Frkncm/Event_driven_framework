@@ -1,0 +1,3 @@
+/home/furkan/Cpp_workout/own_event_driven_framework/build/CMakeFiles/rebuild_cache.dir
+/home/furkan/Cpp_workout/own_event_driven_framework/build/CMakeFiles/edit_cache.dir
+/home/furkan/Cpp_workout/own_event_driven_framework/build/CMakeFiles/Event_driven_framework.dir
