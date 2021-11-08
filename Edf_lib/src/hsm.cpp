@@ -72,15 +72,6 @@ namespace Event_driven
             tempSignal.sig = INIT_SIG;
             rtn = TRIG_STATE(t, &tempSignal); // execute initial transition
 
-            // cState = target_state;
-            // if (rtn == HANDLE_TRAN)
-            //     tempSignal.sig = ENTRY_SIG;
-            // else
-            //     /* Trig the current state with empty event */
-            //     tempSignal.sig = EMPTY_SIG;
-
-            // rtn = TRIG_STATE(cState, &tempSignal);
-
         } while (rtn == HANDLE_TRAN);
 
         current_state = t;
