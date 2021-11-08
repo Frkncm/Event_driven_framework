@@ -3,7 +3,13 @@
 
 #include "aos.hpp"
 
-extern Event_driven::Active *const AO_myObj; 
+enum my_events : Event_driven::Signal
+{
+    WASTE_EVENT = 3,
+    TEST_EVENT,
 
+};
+
+extern Event_driven::Active *const AO_myObj;
 
 #endif //_AO_EXAMPLE_HPP_

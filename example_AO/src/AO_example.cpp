@@ -81,6 +81,14 @@ STATE_DEF(myObj, test2)
         break;
 
     case INIT_SIG:
+        Event_driven::Event evt;
+        evt.sig = TEST_EVENT;
+        AO_myObj->post_(&evt);
+        status = STATE_HANDLED;
+        break;
+
+    case TEST_EVENT:
+        std::cout << "test event is trigged!\n";
         status = STATE_HANDLED;
         break;
 
