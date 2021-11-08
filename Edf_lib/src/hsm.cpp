@@ -20,6 +20,11 @@ namespace Event_driven
         return IGNORED_EVENT;
     }
 
+    std::int_fast8_t HSM::hsm_tran(stateHandlerPtr *hierarchy)
+    {
+        return 0;
+    }
+
     void HSM::init(void)
     {
         stateHandlerPtr t = current_state;
@@ -83,7 +88,7 @@ namespace Event_driven
 
         stateHandlerPtr t = current_state;
 
-        stateHandlerPtr super_state;
+        stateHandlerPtr source_state;
 
         State rtn; // returned status
 
@@ -93,9 +98,9 @@ namespace Event_driven
         {
             /* Target state is being updated when we are using 
             tran() or super() functions */
-            super_state = target_state;
+            source_state = target_state;
             /* Execute the current event */
-            rtn = (*super_state)(this, e);
+            rtn = (*source_state)(this, e);
 
         } while (rtn == SUPER_STATE);
 
@@ -106,28 +111,31 @@ namespace Event_driven
 
             path[0] = target_state; // save last assigned target state
             path[1] = t;
-            path[2] = super_state;
+            path[2] = source_state;
 
-            for (; t != super_state; t = target_state)
+            for (; t != source_state; t = target_state)
             {
                 //Trig the exit state before exiting
                 tempSignal.sig = EXIT_SIG;
                 if (TRIG_STATE(t, &tempSignal) == STATE_HANDLED)
                 {
                     /* Find the super state by sending empty event */
-                    // tempSignal{.sig = EMPTY_SIG};
-                    // rtn = TRIG_STATE(super_state, &tempSignal);
+                    tempSignal.sig = EMPTY_SIG;
+                    rtn = TRIG_STATE(source_state, &tempSignal);
                 }
             }
 
-            super_state = target_state;
+            std::int_fast8_t ind = hsm_tran(path);
+
+            source_state = target_state;
 
             const Event evt{.sig = ENTRY_SIG};
 
-            rtn = (*super_state)(this, &evt);
+            rtn = (*source_state)(this, &evt);
         }
 
-        //current_state = cState;
+        current_state = t; // change the current active state
+        target_state = t;  // mark the configuration as stable
     }
 
 }

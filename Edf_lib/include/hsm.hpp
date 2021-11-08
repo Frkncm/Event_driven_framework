@@ -48,6 +48,8 @@ namespace Event_driven
 
         void init(void);
 
+        std::int_fast8_t hsm_tran(stateHandlerPtr *hierarchy);
+
         void dispatcher(Event const *const e);
 
         static State top(void *const me, Event const *const e) noexcept;
