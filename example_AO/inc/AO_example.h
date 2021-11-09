@@ -5,7 +5,7 @@
 
 enum my_events : Event_driven::Signal
 {
-    WASTE_EVENT = 3,
+    WASTE_EVENT = Event_driven::USER_SIG,
     TEST_EVENT,
     LED_BLINK,
     TEST_TRAN,

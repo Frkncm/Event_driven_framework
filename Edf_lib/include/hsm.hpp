@@ -16,9 +16,10 @@
 
 namespace Event_driven
 {
-
     using State = std::uint8_t;
     using Signal = std::uint16_t;
+
+    constexpr Signal USER_SIG{4};
 
     struct Event
     {
