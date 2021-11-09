@@ -1,4 +1,4 @@
-# Event Driven Development framework
+# Event-Driven Development Framework
 
 This framework is created for applications where everything has been created based on events. It is still in development and can be considered a toy framework until the important stuff is done.
 
