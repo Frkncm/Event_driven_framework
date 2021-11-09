@@ -14,6 +14,9 @@
     }                                                                                           \
     Event_driven::State subclass::stateName##_h(Event_driven::Event const *const e)
 
+#define POST(ao_, evt_) do{ Event_driven::Event t_evt_ {.sig = evt_};\
+                                   ao_->post_(&t_evt_);} while(false) 
+
 namespace Event_driven
 {
     using State = std::uint8_t;

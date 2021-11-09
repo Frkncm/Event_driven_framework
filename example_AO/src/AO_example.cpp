@@ -88,8 +88,7 @@ STATE_DEF(myObj, test2)
         break;
 
     case INIT_SIG:
-        evt.sig = TEST_EVENT;
-        AO_myObj->post_(&evt);
+        POST(AO_myObj, TEST_EVENT);
         status = STATE_HANDLED;
         break;
 
@@ -123,16 +122,13 @@ namespace Event_driven
         switch (ch)
         {
         case 'l':
-            evt.sig = LED_BLINK;
-            AO_myObj->post_(&evt);
+            POST(AO_myObj,LED_BLINK);
             break;
         case 't':
-            evt.sig = TEST_EVENT;
-            AO_myObj->post_(&evt);
+            POST(AO_myObj,TEST_EVENT);
             break;
         case 'e':
-            evt.sig = TEST_TRAN;
-            AO_myObj->post_(&evt);
+            POST(AO_myObj,TEST_TRAN);
             break;
 
         default:
