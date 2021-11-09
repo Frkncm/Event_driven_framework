@@ -1,8 +1,15 @@
 #include "hsm.hpp"
 #include <assert.h>
 //! helper macro to trigger internal event in an HSM
-#define TRIG_STATE(state_, sig_) \
-    ((*(state_))(this, sig_))
+
+static Event_driven::Event const frameworkEvents_[4]{
+    {0U}, // EMPTY_SIG
+    {1U}, // ENTRY_SIG
+    {2U}, // EXIT_SIG
+    {3U}  // INIT_SIG
+};
+
+#define TRIG_STATE(state_, sig_) ((*(state_))(this, &frameworkEvents_[sig_]))
 
 namespace Event_driven
 {
@@ -26,8 +33,6 @@ namespace Event_driven
 
         stateHandlerPtr cState;
 
-        Event tempSignal;
-
         // Execute the initial function at first with empty event
         State rtn = (*target_state)(this, static_cast<Event const *>(0U));
 
@@ -42,8 +47,7 @@ namespace Event_driven
             hierarchy[0] = target_state;
 
             // Trig the current state with empty signal
-            tempSignal.sig = EMPTY_SIG;
-            (void)TRIG_STATE(target_state, &tempSignal);
+            (void)TRIG_STATE(target_state, EMPTY_SIG);
 
             while (target_state != t)
             {
@@ -53,24 +57,22 @@ namespace Event_driven
                 /* Save superstate of each states */
                 hierarchy[indx] = target_state;
                 /* Trig the state again with empty signal */
-                (void)TRIG_STATE(target_state, &tempSignal);
+                (void)TRIG_STATE(target_state, EMPTY_SIG);
             }
 
             /* Now we should have all the superstates in one array */
             target_state = hierarchy[0]; // save first assigned state again
 
-            tempSignal.sig = ENTRY_SIG;
             do
             {
                 /* Trig the entries of each hierarchical states */
-                TRIG_STATE(hierarchy[indx], &tempSignal);
+                (void)TRIG_STATE(hierarchy[indx], ENTRY_SIG);
                 --indx;
             } while (indx >= 0);
 
             t = hierarchy[0];
 
-            tempSignal.sig = INIT_SIG;
-            rtn = TRIG_STATE(t, &tempSignal); // execute initial transition
+            rtn = TRIG_STATE(t, INIT_SIG); // execute initial transition
 
         } while (rtn == HANDLE_TRAN);
 
@@ -90,14 +92,12 @@ namespace Event_driven
         // (a) check source==target (transition to self)
         if (s == t)
         {
-            tempSignal.sig = EXIT_SIG;
-            (void)TRIG_STATE(s, &tempSignal);
+            (void)TRIG_STATE(s, EXIT_SIG);
             ip = 0; // enter the target
         }
         else
         {
-            tempSignal.sig = EMPTY_SIG;
-            (void)TRIG_STATE(t, &tempSignal); // superstate of target
+            (void)TRIG_STATE(t, EMPTY_SIG); // superstate of target
             t = target_state;
 
             // (b) check source==target->super
@@ -107,22 +107,19 @@ namespace Event_driven
             }
             else
             {
-                tempSignal.sig = EMPTY_SIG;
-                (void)TRIG_STATE(t, &tempSignal); // superstate of target
+                (void)TRIG_STATE(t, EMPTY_SIG); // superstate of target
                 // (c) check source->super==target->super
                 if (target_state == t)
                 {
-                    tempSignal.sig = EXIT_SIG;
-                    (void)TRIG_STATE(s, &tempSignal); // exit the source
-                    ip = 0;                           // enter the target
+                    (void)TRIG_STATE(s, EXIT_SIG); // exit the source
+                    ip = 0;                        // enter the target
                 }
                 else
                 {
                     // (d) check source->super==target
                     if (target_state == hierarchy[0])
                     {
-                        tempSignal.sig = EXIT_SIG;
-                        (void)TRIG_STATE(s, &tempSignal); // exit the source
+                        (void)TRIG_STATE(s, EXIT_SIG); // exit the source
                     }
                     else
                     {
@@ -135,8 +132,7 @@ namespace Event_driven
                         t = target_state; // save source->super
 
                         // find target->super->super
-                        tempSignal.sig = EMPTY_SIG;
-                        r = TRIG_STATE(hierarchy[1], &tempSignal);
+                        r = TRIG_STATE(hierarchy[1], EMPTY_SIG);
 
                         while (r == SUPER_STATE)
                         {
@@ -153,16 +149,13 @@ namespace Event_driven
                             // it is not the source, keep going up
                             else
                             {
-                                tempSignal.sig = EMPTY_SIG;
-                                r = TRIG_STATE(target_state, &tempSignal);
+                                r = TRIG_STATE(target_state, EMPTY_SIG);
                             }
                         }
 
                         if (iq == 0)
                         {
-
-                            tempSignal.sig = EXIT_SIG;
-                            (void)TRIG_STATE(target_state, &tempSignal);
+                            (void)TRIG_STATE(target_state, EXIT_SIG);
 
                             // (f) check the rest of source->super
                             //                  == target->super->super...
@@ -194,11 +187,9 @@ namespace Event_driven
                                 do
                                 {
                                     // exit t unhandled?
-                                    tempSignal.sig = EXIT_SIG;
-                                    if (TRIG_STATE(t, &tempSignal) == STATE_HANDLED)
+                                    if (TRIG_STATE(t, EXIT_SIG) == STATE_HANDLED)
                                     {
-                                        tempSignal.sig = EMPTY_SIG;
-                                        (void)TRIG_STATE(t, &tempSignal);
+                                        (void)TRIG_STATE(t, EMPTY_SIG);
                                     }
                                     t = target_state; //  set to super of t
                                     iq = ip;
@@ -235,8 +226,6 @@ namespace Event_driven
 
         State rtn; // returned status
 
-        Event tempSignal;
-
         do
         {
             /* Target state is being updated when we are using 
@@ -259,50 +248,43 @@ namespace Event_driven
             for (; t != source_state; t = target_state)
             {
                 //Trig the exit state before exiting
-                tempSignal.sig = EXIT_SIG;
-                if (TRIG_STATE(t, &tempSignal) == STATE_HANDLED)
+                if (TRIG_STATE(t, EXIT_SIG) == STATE_HANDLED)
                 {
                     /* Find the super state by sending empty event */
-                    tempSignal.sig = EMPTY_SIG;
-                    (void)TRIG_STATE(source_state, &tempSignal);
+                    (void)TRIG_STATE(source_state, EMPTY_SIG);
                 }
             }
 
             std::int_fast8_t ip = hsm_tran(path);
 
             // retrace the entry path in reverse (desired) order...
-            tempSignal.sig = ENTRY_SIG;
             for (; ip >= 0; --ip)
             {
-                TRIG_STATE(path[ip], &tempSignal);
+                (void)TRIG_STATE(path[ip], ENTRY_SIG);
             }
             t = path[0];      // stick the target into register
             target_state = t; // update the next state
 
             // drill into the target hierarchy...
-            tempSignal.sig = INIT_SIG;
-            while (TRIG_STATE(t, &tempSignal) == HANDLE_TRAN)
+            while (TRIG_STATE(t, INIT_SIG) == HANDLE_TRAN)
             {
                 ip = 0;
                 path[0] = target_state;
 
-                tempSignal.sig = EMPTY_SIG;
-                (void)TRIG_STATE(target_state, &tempSignal); // find superstate
+                (void)TRIG_STATE(target_state, EMPTY_SIG); // find superstate
 
                 while (target_state != t)
                 {
                     ++ip;
                     path[ip] = target_state;
-                    tempSignal.sig = EMPTY_SIG;
-                    (void)TRIG_STATE(target_state, &tempSignal); // find superstate
+                    (void)TRIG_STATE(target_state, EMPTY_SIG); // find superstate
                 }
                 target_state = path[0];
 
                 // retrace the entry path in reverse (correct) order...
-                tempSignal.sig = ENTRY_SIG;
                 do
                 {
-                    TRIG_STATE(path[ip], &tempSignal);
+                    (void)TRIG_STATE(path[ip], ENTRY_SIG);
                     --ip;
                 } while (ip >= 0);
 
