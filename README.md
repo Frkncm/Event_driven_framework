@@ -6,6 +6,8 @@ it is inspired by QP Framework, which provides highly modern and reliable Real-t
 
 # Software Architecture scheme
 
+
+
 ![plot](./img/software_architecture.png)
 
 
