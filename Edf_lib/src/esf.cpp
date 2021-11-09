@@ -2,6 +2,7 @@
 
 #include "esf.hpp"
 #include "aos.hpp"
+#include <iostream>
 
 namespace Event_driven
 {
@@ -57,10 +58,10 @@ namespace Event_driven
     /* Please override this function when you want to use for 
     production codes */
 
-    void esf::onIdle(void)
-    {
-        // implement when there is no event for AOs
-    }
+    // void esf::onIdle(void)
+    // {
+    //     // implement when there is no event for AOs
+    // }
 
     void esf::onStartup(void)
     {

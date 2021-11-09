@@ -52,6 +52,7 @@ STATE_DEF(myObj, test)
 STATE_DEF(myObj, test1)
 {
     Event_driven::State status;
+    Event_driven::Event evt;
     switch (e->sig)
     {
     case ENTRY_SIG:
@@ -61,6 +62,11 @@ STATE_DEF(myObj, test1)
 
     case INIT_SIG:
         status = tran(test2);
+        break;
+
+    case LED_BLINK:
+        std::cout << "led blink event is trigged!\n";
+        status = STATE_HANDLED;
         break;
 
     default:
@@ -73,6 +79,7 @@ STATE_DEF(myObj, test1)
 STATE_DEF(myObj, test2)
 {
     Event_driven::State status;
+    Event_driven::Event evt;
     switch (e->sig)
     {
     case ENTRY_SIG:
@@ -81,10 +88,13 @@ STATE_DEF(myObj, test2)
         break;
 
     case INIT_SIG:
-        Event_driven::Event evt;
         evt.sig = TEST_EVENT;
         AO_myObj->post_(&evt);
         status = STATE_HANDLED;
+        break;
+
+    case TEST_TRAN:
+        status = tran(test1);
         break;
 
     case TEST_EVENT:
@@ -98,4 +108,35 @@ STATE_DEF(myObj, test2)
     }
 
     return status; //STATE_HANDLED;
+}
+
+// onIdle function provided by framework
+namespace Event_driven
+{
+    void esf::onIdle(void)
+    {
+        // implement when there is no event for AOs
+        char ch;
+        Event evt;
+        std::cin >> ch;
+
+        switch (ch)
+        {
+        case 'l':
+            evt.sig = LED_BLINK;
+            AO_myObj->post_(&evt);
+            break;
+        case 't':
+            evt.sig = TEST_EVENT;
+            AO_myObj->post_(&evt);
+            break;
+        case 'e':
+            evt.sig = TEST_TRAN;
+            AO_myObj->post_(&evt);
+            break;
+
+        default:
+            break;
+        }
+    }
 }

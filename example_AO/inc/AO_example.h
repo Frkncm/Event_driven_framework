@@ -7,6 +7,8 @@ enum my_events : Event_driven::Signal
 {
     WASTE_EVENT = 3,
     TEST_EVENT,
+    LED_BLINK,
+    TEST_TRAN,
 
 };
 
