@@ -4,7 +4,7 @@ This framework is created for applications where everything has been created bas
 
 it is inspired by QP Framework, which provides highly modern and reliable Real-time Embedded Framework. You will find a similar implementation from QP in this repo.
 
-# Software Architecture scheme
+# Software Architecture Scheme
 
 
 
