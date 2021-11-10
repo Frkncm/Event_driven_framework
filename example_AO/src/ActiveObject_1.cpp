@@ -1,5 +1,4 @@
 #include "AO_example.h"
-#include <iostream>
 
 // Production code
 class myObj : public Event_driven::Active
@@ -22,7 +21,7 @@ myObj::myObj() : Event_driven::Active(Initial_state) {}
 
 STATE_DEF(myObj, Initial_state)
 {
-    std::cout << "Initial state!\n";
+    std::cout << "AO1 Initial state!\n";
     auto state = tran(test);
     return state;
 }
@@ -33,7 +32,7 @@ STATE_DEF(myObj, test)
     switch (e->sig)
     {
     case ENTRY_SIG:
-        std::cout << "test is invoked!\n";
+        std::cout << "AO1 test is invoked!\n";
         status = STATE_HANDLED;
         break;
 
@@ -42,7 +41,7 @@ STATE_DEF(myObj, test)
         break;
 
     case TRIG_SUPER:
-        std::cout << "super event is trigged!\n";
+        std::cout << "AO1 super event is trigged!\n";
         status = STATE_HANDLED;
         break;
 
@@ -60,7 +59,7 @@ STATE_DEF(myObj, test1)
     switch (e->sig)
     {
     case ENTRY_SIG:
-        std::cout << "test1 is invoked!\n";
+        std::cout << "AO1 test1 is invoked!\n";
         status = STATE_HANDLED;
         break;
 
@@ -69,7 +68,7 @@ STATE_DEF(myObj, test1)
         break;
 
     case LED_BLINK:
-        std::cout << "led blink event is trigged!\n";
+        std::cout << "AO1 led blink event is trigged!\n";
         status = STATE_HANDLED;
         break;
 
@@ -86,7 +85,7 @@ STATE_DEF(myObj, test2)
     switch (e->sig)
     {
     case ENTRY_SIG:
-        std::cout << "test2 is invoked!\n";
+        std::cout << "AO1 test2 is invoked!\n";
         status = STATE_HANDLED;
         break;
 
@@ -100,7 +99,7 @@ STATE_DEF(myObj, test2)
         break;
 
     case TEST_EVENT:
-        std::cout << "test event is trigged!\n";
+        std::cout << "AO1 test event is trigged!\n";
         status = STATE_HANDLED;
         break;
 
@@ -135,6 +134,9 @@ namespace Event_driven
             break;
         case 's':
             POST(AO_myObj, TRIG_SUPER);
+            break;
+        case 'd':
+            POST(AO_myObj_1, TRIG_SUPER);
             break;
 
         default:

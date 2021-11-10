@@ -2,6 +2,7 @@
 #define _AO_EXAMPLE_H_
 
 #include "aos.hpp"
+#include <iostream>
 
 enum my_events : Event_driven::Signal
 {
@@ -14,5 +15,6 @@ enum my_events : Event_driven::Signal
 };
 
 extern Event_driven::Active *const AO_myObj;
+extern Event_driven::Active *const AO_myObj_1;
 
 #endif //_AO_EXAMPLE_HPP_

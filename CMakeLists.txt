@@ -18,7 +18,8 @@ add_executable(Event_driven_framework
   Edf_lib/src/hsm.cpp
   Edf_lib/src/aos.cpp
   Edf_lib/src/esf.cpp
-  example_AO/src/AO_example.cpp
+  example_AO/src/ActiveObject_1.cpp
+  example_AO/src/ActiveObject_2.cpp
 )
 
 set_target_properties(Event_driven_framework PROPERTIES LINK_LIBRARIES -pthread)
