@@ -14,7 +14,8 @@ enum my_events : Event_driven::Signal
 
 };
 
-extern Event_driven::Active *const AO_myObj;
+// Active objects' opaque pointers
 extern Event_driven::Active *const AO_myObj_1;
+extern Event_driven::Active *const AO_myObj_2;
 
 #endif //_AO_EXAMPLE_HPP_

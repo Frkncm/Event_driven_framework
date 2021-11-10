@@ -1,11 +1,11 @@
 #include "AO_example.h"
 
 // Production code
-class myObj : public Event_driven::Active
+class myObj_1 : public Event_driven::Active
 {
 
 public:
-    myObj(); // default ctor
+    myObj_1(); // default ctor
 
     STATE_DEC(Initial_state);
     STATE_DEC(test);
@@ -13,20 +13,20 @@ public:
     STATE_DEC(test2);
 };
 
-static myObj l_myObj;
+static myObj_1 l_myObj;
 
-Event_driven::Active *const AO_myObj = &l_myObj;
+Event_driven::Active *const AO_myObj_1 = &l_myObj;
 
-myObj::myObj() : Event_driven::Active(Initial_state) {}
+myObj_1::myObj_1() : Event_driven::Active(Initial_state) {}
 
-STATE_DEF(myObj, Initial_state)
+STATE_DEF(myObj_1, Initial_state)
 {
     std::cout << "AO1 Initial state!\n";
     auto state = tran(test);
     return state;
 }
 
-STATE_DEF(myObj, test)
+STATE_DEF(myObj_1, test)
 {
     Event_driven::State status;
     switch (e->sig)
@@ -53,7 +53,7 @@ STATE_DEF(myObj, test)
     return status;
 }
 
-STATE_DEF(myObj, test1)
+STATE_DEF(myObj_1, test1)
 {
     Event_driven::State status;
     switch (e->sig)
@@ -79,7 +79,7 @@ STATE_DEF(myObj, test1)
     return status;
 }
 
-STATE_DEF(myObj, test2)
+STATE_DEF(myObj_1, test2)
 {
     Event_driven::State status;
     switch (e->sig)
@@ -90,7 +90,7 @@ STATE_DEF(myObj, test2)
         break;
 
     case INIT_SIG:
-        POST(AO_myObj, TEST_EVENT);
+        POST(AO_myObj_1, TEST_EVENT);
         status = STATE_HANDLED;
         break;
 

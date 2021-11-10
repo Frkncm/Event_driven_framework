@@ -1,30 +1,30 @@
 #include "AO_example.h"
 
 // Production code
-class myObj_1 : public Event_driven::Active
+class myObj_2 : public Event_driven::Active
 {
 
 public:
-    myObj_1(); // default ctor
+    myObj_2(); // default ctor
 
     STATE_DEC(Initial_state);
     STATE_DEC(test);
 };
 
-static myObj_1 l_myObj;
+static myObj_2 l_myObj;
 
-Event_driven::Active *const AO_myObj_1 = &l_myObj;
+Event_driven::Active *const AO_myObj_2 = &l_myObj;
 
-myObj_1::myObj_1() : Event_driven::Active(Initial_state) {}
+myObj_2::myObj_2() : Event_driven::Active(Initial_state) {}
 
-STATE_DEF(myObj_1, Initial_state)
+STATE_DEF(myObj_2, Initial_state)
 {
     std::cout << "AO2 Initial state!\n";
     auto state = tran(test);
     return state;
 }
 
-STATE_DEF(myObj_1, test)
+STATE_DEF(myObj_2, test)
 {
     Event_driven::State status;
     switch (e->sig)
