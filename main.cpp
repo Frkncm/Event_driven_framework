@@ -12,7 +12,7 @@ int main(void)
     return Event_driven::esf::run();
 }
 
-/* Overrided onIdle function provided by framework */
+/* onIdle function provided by the framework */
 namespace Event_driven
 {
     void esf::onIdle(void)
