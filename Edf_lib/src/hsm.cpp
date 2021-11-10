@@ -226,6 +226,7 @@ namespace Event_driven
 
         State rtn; // returned status
 
+        /* Let the execute posted event in hieratical manner */
         do
         {
             /* Target state is being updated when we are using 

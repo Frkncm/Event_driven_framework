@@ -9,6 +9,7 @@ enum my_events : Event_driven::Signal
     TEST_EVENT,
     LED_BLINK,
     TEST_TRAN,
+    TRIG_SUPER,
 
 };
 

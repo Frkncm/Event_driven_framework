@@ -41,6 +41,11 @@ STATE_DEF(myObj, test)
         status = tran(test1);
         break;
 
+    case TRIG_SUPER:
+        std::cout << "super event is trigged!\n";
+        status = STATE_HANDLED;
+        break;
+
     default:
         status = super(&top);
         break;
@@ -52,7 +57,6 @@ STATE_DEF(myObj, test)
 STATE_DEF(myObj, test1)
 {
     Event_driven::State status;
-    Event_driven::Event evt;
     switch (e->sig)
     {
     case ENTRY_SIG:
@@ -79,7 +83,6 @@ STATE_DEF(myObj, test1)
 STATE_DEF(myObj, test2)
 {
     Event_driven::State status;
-    Event_driven::Event evt;
     switch (e->sig)
     {
     case ENTRY_SIG:
@@ -122,13 +125,16 @@ namespace Event_driven
         switch (ch)
         {
         case 'l':
-            POST(AO_myObj,LED_BLINK);
+            POST(AO_myObj, LED_BLINK);
             break;
         case 't':
-            POST(AO_myObj,TEST_EVENT);
+            POST(AO_myObj, TEST_EVENT);
             break;
         case 'e':
-            POST(AO_myObj,TEST_TRAN);
+            POST(AO_myObj, TEST_TRAN);
+            break;
+        case 's':
+            POST(AO_myObj, TRIG_SUPER);
             break;
 
         default:
